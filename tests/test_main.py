@@ -1,4 +1,5 @@
 """Dummy test"""
+
 from python_provider.main import main
 
 
