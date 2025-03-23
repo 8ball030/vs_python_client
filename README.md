@@ -1,7 +1,5 @@
 # python_provider
 
-
-
 ## Table of Contents
 
 - [Getting Started](#getting-started)
@@ -22,7 +20,7 @@
 Install `python_provider` with pip:
 
 ```shell
-pip install python_provider
+pip install -e .
 ```
 
 ### Setup for Development
@@ -30,17 +28,32 @@ pip install python_provider
 If you're looking to contribute or develop with `python_provider`, get the source code and set up the environment:
 
 ```shell
-git clone https://github.com/eightballer/python_provider
+git clone git@github.com:8ball030/vs_python_client.git
 cd python_provider
 poetry install && poetry shell
 ```
 
 ## Usage
 
-With `python_provider` installed, you can use it in your Python projects:
+With `python_provider` installed, you have access to a command line tool.
 
 ```python
-import python_provider
+╰─>$ python_provider --help
+                                                                                                                                                                                
+ Usage: python_provider [OPTIONS]                                                                                                                                               
+                                                                                                                                                                                
+ WebSocket client for handling asynchronous blockchain RPC requests.                                                                                                            
+                                                                                                                                                                                
+╭─ Options ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --proxy_url    TEXT                                 URL of the proxy server                                                                                                  │
+│ --host         TEXT                                 WebSocket server host                                                                                                    │
+│ --port         INTEGER                              WebSocket server port                                                                                                    │
+│ --path         TEXT                                 WebSocket endpoint path                                                                                                  │
+│ --log-level    [DEBUG|INFO|WARNING|ERROR|CRITICAL]  Set the logging level                                                                                                    │
+│ --help                                              Show this message and exit.                                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+
 ```
 
 ## Commands
