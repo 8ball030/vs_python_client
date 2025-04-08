@@ -158,7 +158,6 @@ async def main(proxy_url: str, host: str = "127.0.0.1", port: int = 8080, path: 
     uri = f"ws://{host}:{port}{path}"
     processor = AsyncRequestProcessor(proxy_url=proxy_url)
 
-
     current_block = 0
     chain_id = 0
     address = "0x" + uuid.uuid4().hex
@@ -167,11 +166,6 @@ async def main(proxy_url: str, host: str = "127.0.0.1", port: int = 8080, path: 
     
     try:
         logger.info(f"Connecting to {uri}")
-
-        # we overwrite the standard ping method to send a message to the server
-        # to keep the connection alive
-        # we use this to connect to the rpc server
-
         heartbeat = HeartBeat(id="heartbeat", block_number=current_block, chain_id=chain_id, provider_addr=address)
         async with websockets.connect(uri, max_size=5 * 2**20) as websocket:
             logger.info(f"Connected to {uri}, waiting for requests, id: {heartbeat.id}")
