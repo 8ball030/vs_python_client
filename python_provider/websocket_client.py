@@ -155,7 +155,7 @@ class AsyncRequestProcessor:
 
 async def main(proxy_url: str, host: str = "127.0.0.1", port: int = 8080, path: str = "/ws"):
     """Main function to run the WebSocket client."""
-    uri = f"ws://{host}:{port}{path}"
+    uri = f"wss://{host}:{port}{path}"
     processor = AsyncRequestProcessor(proxy_url=proxy_url)
 
     current_block = 0
@@ -163,11 +163,20 @@ async def main(proxy_url: str, host: str = "127.0.0.1", port: int = 8080, path: 
     address = "0x" + uuid.uuid4().hex
 
 
+    import ssl
+    ssl_context = ssl.create_default_context()
+    ssl_context.check_hostname = False
+    ssl_context.verify_mode = ssl.CERT_NONE
     
     try:
         logger.info(f"Connecting to {uri}")
         heartbeat = HeartBeat(id="heartbeat", block_number=current_block, chain_id=chain_id, provider_addr=address)
-        async with websockets.connect(uri, max_size=5 * 2**20) as websocket:
+        async with websockets.connect(uri, max_size=5 * 2**20,
+        ssl=ssl_context,  # Use the custom SSL context
+        # We skip the verification of the server's certificate
+        # This is not recommended for production code, but useful for testing
+        # and development purposes
+        ) as websocket:
             logger.info(f"Connected to {uri}, waiting for requests, id: {heartbeat.id}")
             async def get_block_number(heartbeat):
                 block_number = await processor.client.post(
